@@ -1,3 +1,8 @@
+-- Создание базы данных
+
+CREATE DATABASE IF NOT EXISTS testdb;
+USE testdb;
+
 -- Создание таблицы клиентов
 CREATE TABLE clients (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
