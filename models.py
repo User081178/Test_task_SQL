@@ -36,5 +36,5 @@ class ClientPaymentRelation(Base):
 
 
 # Создание соединения с базой данных MySQL
- engine = create_engine('mysql://username:password@localhost/dbname')
+ engine = create_engine('mysql://Sokov:Base081178@localhost/testdb')
  Base.metadata.create_all(engine)
