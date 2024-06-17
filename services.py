@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import engine, Client, Payment, ClientPaymentRelation
-import uuid
+
 
 # Создаем сессию для работы с базой данных
 Session = sessionmaker(bind=engine)
@@ -35,8 +35,14 @@ class RelationService:
 
 class ClientService:
     def create_client(self, name, email):
-        new_client_id = str(uuid.uuid4())  # Генерируем уникальный ID
-        new_client = Client(id=new_client_id, name=name, email=email)  # Используем уникальный ID при создании клиента
+        # Находим максимальный ID среди существующих клиентов
+        max_existing_id = session.query(func.max(Client.id)).scalar() or 0
+        
+        # Генерируем новый ID для нового клиента
+        new_client_id = max_existing_id + 1
+
+        # Создаем нового клиента с сгенерированным ID
+        new_client = Client(id=new_client_id, name=name, email=email)
         session.add(new_client)
         session.commit()
         RelationService.update_client_payment_relations()
