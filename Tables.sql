@@ -20,7 +20,7 @@ INSERT INTO clients (id, name, email) VALUES
 
 -- Создание таблицы платежей
 CREATE TABLE payments (
-    id INT PRIMARY KEY NOT NULL UNIQUE,
+    id INT PRIMARY KEY NOT NULL,
     amount DECIMAL(10, 2),
     date DATE
 );
