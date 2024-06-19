@@ -39,16 +39,11 @@ class RelationService:
 
 
 class ClientService:
-    def create_client(self, session):
-        payment_id = int(input("Введите ID платежа: "))
-        amount = float(input("Введите сумму платежа: "))
-        date = input("Введите дату платежа (гггг-мм-дд): ")
+        def create_client(self, session):
+        name = input("Введите имя клиента: ")
+        email = input("Введите email клиента: ")
 
-        # Создаем новый платеж
-        new_payment = Payment(id=payment_id, amount=amount, date=date)
-        session.add(new_payment)
-        session.commit()
-        RelationService.update_client_payment_relations(session)
+        new_client = Client(name=name, email=email)
         session.add(new_client)
         session.commit()
         RelationService.update_client_payment_relations(session)
@@ -87,11 +82,15 @@ service.delete_client()
 
 class PaymentService:
     def create_payment(self, session):
+        payment_id = int(input("Введите ID платежа: "))
         amount = float(input("Введите сумму платежа: "))
         date = input("Введите дату платежа (гггг-мм-дд): ")
 
         # Создаем новый платеж
-        new_payment = Payment(amount=amount, date=date)
+        new_payment = Payment(id=payment_id, amount=amount, date=date)
+        session.add(new_payment)
+        session.commit()
+        RelationService.update_client_payment_relations(session)
         session.add(new_payment)
         session.commit()
         RelationService.update_client_payment_relations(session)
