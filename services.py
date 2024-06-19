@@ -46,7 +46,7 @@ class ClientService:
         new_client = Client(name=name, email=email)
         session.add(new_client)
         session.commit()
-        RelationService.update_client_payment_relations()
+        RelationService.update_client_payment_relations(session)
 
     def edit_client(self, session):
         client_id = input("Введите ID клиента для редактирования: ")
@@ -58,7 +58,7 @@ class ClientService:
             client.name = new_name
             client.email = new_email
             session.commit()
-            RelationService.update_client_payment_relations()
+            RelationService.update_client_payment_relations(session)
         else:
             print(f"Клиент с ID {client_id} не найден.")
 
@@ -68,7 +68,7 @@ class ClientService:
         if client:
             session.delete(client)
             session.commit()
-            RelationService.update_client_payment_relations()
+            RelationService.update_client_payment_relations(session)
             print(f"Клиент с ID {client_id} успешно удален.")
         else:
             print(f"Клиент с ID {client_id} не найден.")
@@ -89,7 +89,7 @@ class PaymentService:
         new_payment = Payment(amount=amount, date=date)
         session.add(new_payment)
         session.commit()
-        RelationService.update_client_payment_relations()
+        RelationService.update_client_payment_relations(session)
 
     def edit_payment(self, session):
         payment_id = int(input("Введите ID платежа для редактирования: "))
@@ -102,7 +102,7 @@ class PaymentService:
             payment.amount = new_amount
             payment.date = new_date
             session.commit()
-            RelationService.update_client_payment_relations()
+            RelationService.update_client_payment_relations(session)
 
     def delete_payment(self, session):
         payment_id = int(input("Введите ID платежа для удаления: "))
@@ -112,7 +112,7 @@ class PaymentService:
         if payment:
             session.delete(payment)
             session.commit()
-            RelationService.update_client_payment_relations()
+            RelationService.update_client_payment_relations(session)
             
 # Пример использования
 service = PaymentService()
