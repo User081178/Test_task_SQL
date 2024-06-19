@@ -39,7 +39,7 @@ class RelationService:
 
 
 class ClientService:
-    def create_client(self):
+    def create_client(self, session):
         name = input("Введите имя клиента: ")
         email = input("Введите email клиента: ")
 
@@ -48,7 +48,7 @@ class ClientService:
         session.commit()
         RelationService.update_client_payment_relations()
 
-    def edit_client(self):
+    def edit_client(self, session):
         client_id = input("Введите ID клиента для редактирования: ")
         client = session.query(Client).filter(Client.id == client_id).first()
         if client:
@@ -62,7 +62,7 @@ class ClientService:
         else:
             print(f"Клиент с ID {client_id} не найден.")
 
-    def delete_client(self):
+    def delete_client(self, session):
         client_id = input("Введите ID клиента для удаления: ")
         client = session.query(Client).filter(Client.id == client_id).first()
         if client:
@@ -81,7 +81,7 @@ service.edit_client()
 service.delete_client()
 
 class PaymentService:
-    def create_payment(self):
+    def create_payment(self, session):
         amount = float(input("Введите сумму платежа: "))
         date = input("Введите дату платежа (гггг-мм-дд): ")
 
@@ -91,7 +91,7 @@ class PaymentService:
         session.commit()
         RelationService.update_client_payment_relations()
 
-    def edit_payment(self):
+    def edit_payment(self, session):
         payment_id = int(input("Введите ID платежа для редактирования: "))
         new_amount = float(input("Введите новую сумму платежа: "))
         new_date = input("Введите новую дату платежа (гггг-мм-дд): ")
@@ -104,7 +104,7 @@ class PaymentService:
             session.commit()
             RelationService.update_client_payment_relations()
 
-    def delete_payment(self):
+    def delete_payment(self, session):
         payment_id = int(input("Введите ID платежа для удаления: "))
 
         # Удаляем платеж
