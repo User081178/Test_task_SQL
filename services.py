@@ -40,10 +40,15 @@ class RelationService:
 
 class ClientService:
     def create_client(self, session):
-        name = input("Введите имя клиента: ")
-        email = input("Введите email клиента: ")
+        payment_id = int(input("Введите ID платежа: "))
+        amount = float(input("Введите сумму платежа: "))
+        date = input("Введите дату платежа (гггг-мм-дд): ")
 
-        new_client = Client(name=name, email=email)
+        # Создаем новый платеж
+        new_payment = Payment(id=payment_id, amount=amount, date=date)
+        session.add(new_payment)
+        session.commit()
+        RelationService.update_client_payment_relations(session)
         session.add(new_client)
         session.commit()
         RelationService.update_client_payment_relations(session)
